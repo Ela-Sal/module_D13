@@ -1,0 +1,51 @@
+{% extends 'flatpages/default.html' %}
+ 
+{% block title %}
+Доска объявлений
+{% endblock title %}
+
+
+{% block content %}
+    <h1>Все объявления</h1>
+    <hr>
+    {% if posts %}
+        <p>Количество объявлений: {{posts|length}}</p>
+
+        {% for post in posts %}
+            <h2>
+                <a href="{% url 'post_detail' post.id %}">
+                    {{post.title}}
+                </a>
+            </h2>
+            <p>{{post.dateCreation|date:'d-M-Y H:i'}}</p>
+
+           <p>Категория: {% for category in post.postCategory.all %}<a href="{% url 'category' category.id %}">{{ category.name }}{% if not forloop.last %}, {% endif %} </a>{% endfor %}</p>
+            <p>{{post.text|truncatewords:50}}</p>
+        {% endfor %}
+
+<a href="{% url 'post_create' %}">Добавить новое объявление</a> <br>
+    {% endif %}
+
+{% if is_paginated %}
+    {% if page_obj.has_previous %}
+    <a href="?page=1">First</a>
+    <a href="?page={{ page_obj.previous_page_number }}"><<<</a>
+    {% endif %}
+
+    <!-- Показываем только текущую страницу и ближайшие к ней, чтобы список не тянулся и не захламлял страницу -->
+    {% for num in page_obj.paginator.page_range %}
+    {% if page_obj.number == num %}
+    <a>{{ num }}</a>
+    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+    <a href="?page={{ num }}">{{ num }}</a>
+    {% endif %}
+    {% endfor %}
+
+    <!-- Если есть следующая страница, то даём ссылку на неё и на самую последнюю страницу -->
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">>>></a>
+    <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    {% endif %}
+{% endif %}
+
+{% endblock content %}

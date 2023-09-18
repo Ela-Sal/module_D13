@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2> Здравствуй, {{ user.username }} появилось новое объявление в категории, на которые вы подписаны!</h2>
+    <h3> {{ title }}</h3>
+    <p>{{ text|truncatechars:50 }} </p>
+    <p>Чтобы прочитать полную статью, перейдите по ссылке ниже:</p>
+    <p><a href="http://127.0.0.1:8000/{{ post.get_absolute_url }}">{{ title }}</a></p>
+</body>
+</html>

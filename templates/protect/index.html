@@ -1,0 +1,17 @@
+{% extends "main.html" %}
+
+{% block content %}
+ <h2>
+   Страница авторизованного пользователя {{request.user.username}}
+ </h2>
+<a class="btn btn-primary" href="{% url 'posts' %}">На главную</a>
+
+
+
+<a class="btn btn-primary" href="{% url 'privatelist' %}"> Отклики</a>
+
+
+
+ <a class="btn btn-primary" href="{% url 'sign:logout' %}">Выйти</a>
+
+{% endblock content %}

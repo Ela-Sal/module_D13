@@ -1,0 +1,53 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+ Объявления
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим все товары -->
+{% block content %}
+
+
+<h2><a>{{post_detail.title}}</a>
+    {% if user.id == post_detail.author.id %}
+    <a href="{% url 'post_update' post_detail.id %}"><u>Редактировать</u></a> <!-- добавим ссылку на редактирование товара-->
+    <a href="{% url 'post_delete' post_detail.id %}"><u> Удалить </u></a>
+    {% endif %}
+</h2>
+<p>{{post_detail.dateCreation|date:'d-M-Y H:i'}}</p>
+<p>{{post_detail.author}}</p>
+<p>{{post_detail.text}}</p>
+
+<p>
+    <form method="POST" action= "" enctype="multipart/form-data" class="p-3 p-md-4 bg-light">
+        {% csrf_token %}
+        <label>Оставить отклик:</label>
+        {{ form.text }}
+        <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
+
+<!--<form method="POST" class="mt-4">-->
+<!--    {% csrf_token %}-->
+<!--    {% load static %}-->
+<!--    <div class="form-check">-->
+<!--        <label>Оставить отклик:</label>-->
+<!--        {{ form.text }}-->
+<!--    </div>-->
+<!--  <button type="submit" class="btn btn-primary">Отправить</button>-->
+<!--</form>-->
+</p>
+<!-- Отображение существующих комментариев (если есть) -->
+{% if responses %}
+
+  <h3>Отклики:</h3>
+  <ul>
+    {% for item in responses %}
+      <li>{{ item.responseUser }}<br>
+          {{ item.text }}
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+
+{% endblock content %}

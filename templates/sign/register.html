@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+
+{% block title %}
+Register
+{% endblock title %}
+
+{% block content %}
+<h2>
+    Регистрация
+</h2>
+<form method="post" class="py-3">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <input type="submit" class="btn btn-primary" value="Зарегистрироваться">
+</form>
+{% endblock content %}

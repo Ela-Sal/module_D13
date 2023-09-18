@@ -1,0 +1,31 @@
+{% extends 'flatpages/default.html' %}
+
+
+{% block title %} Объявления {% endblock title %}
+
+{% block content %}
+    <h1>Все объявления в категории <span>{{ category.name }}</span></h1>
+    {% for post in posts_sub %}
+        <h2>
+            <a href="{% url 'post_detail' post.id %}">{{post.title}}</a>
+
+        </h2>
+        <p>{{post.dateCreation|date:'d-M-Y H:i'}}</p>
+
+        <p>{{post.text|truncatewords:50}}</p>
+    {% endfor %}
+
+    {% if user not in subscribers %}
+        <a href="{% url 'subscribe' category.id %}">
+            <button>Подписаться</button>
+        </a>
+    {% else %}
+        <a href="{% url 'unsubscribe' category.id %}">
+            <button>Отписаться</button>
+        </a>
+
+
+
+
+    {% endif %}
+{% endblock content %}

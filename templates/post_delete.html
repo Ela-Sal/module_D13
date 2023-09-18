@@ -1,0 +1,19 @@
+{% extends 'flatpages/default.html' %}
+
+
+{% block title %}
+Объявления
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим все товары -->
+{% block content %}
+<h2>Вы действительно хотите удалить объявление?</h2>
+
+<h2>{{new.title}}</h2>
+<p>{{new.dateCreation|date:'d. M. Y'}}</p>
+<p>{{new.text}}</p>
+
+<form method="POST">
+  {% csrf_token %}
+  <input type="submit" value="подтвердить"></form>
+{% endblock content %}

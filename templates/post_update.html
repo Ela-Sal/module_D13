@@ -1,0 +1,56 @@
+{% extends 'flatpages/default.html' %}
+
+
+{% block title %}
+Объявления
+{% endblock title %}
+{% block content %}
+<h3>Редактирование объявлений</h3>
+<form method="POST">
+  {% csrf_token %}
+  {% load static %}
+
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 mx-auto">
+        <div class="form-check">
+          <h2 class="card-title">{{ form.author.label }}</h2>
+          {{ form.author }}
+        </div><br>
+      </div>
+
+      <div class="col-md-8 mx-auto">
+        <div class="form-check">
+          <h2 class="card-title">{{ form.postCategory.label }}</h2>
+          {{ form.postCategory }}
+        </div><br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8 mx-auto">
+        <div class="mb-4">
+          <div class="form-check">
+            <h2>{{ form.title.label }}</h2>
+            {{ form.title }}
+          </div>
+        </div>
+        <div class="text-width">
+          <div class="form-check">
+            <h2>{{ form.text.label }}</h2>
+            {{ form.text }}
+          </div>
+          <div>
+            <h2>{{ form.media.label }}</h2>
+            {{ form.media }}
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="d-grid gap-2 col-6 mx-auto">
+    <input class="btn btn-primary"  type="submit" value="Добавить статью">
+  </div>
+</form>
+{% endblock content %}

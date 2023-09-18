@@ -1,0 +1,17 @@
+{% extends 'flatpages/default.html' %}
+
+
+{% block title %}
+
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим все товары -->
+{% block content %}
+<h2>Вы действительно хотите удалить отклик?</h2>
+
+
+<form method="POST">
+  {% csrf_token %}
+  <input type="submit" value="подтвердить">
+</form>
+{% endblock content %}

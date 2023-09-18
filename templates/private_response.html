@@ -1,0 +1,108 @@
+{% extends "main.html" %}
+
+{% block content %}
+<h2>
+    Отклики
+</h2>
+<a class="btn btn-primary" href="http://127.0.0.1:8000/index/">Назад</a>
+<h3><a class="btn btn-primary" href="{% url 'search' %}">Поиск</a></h3>
+
+
+<style>
+    .list-group {
+        list-style: none;
+        padding: 0;
+    }
+
+    .list-group li {
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+    }
+
+    .list-group form {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .list-group textarea {
+        margin-bottom: 5px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        resize: vertical; /* Разрешить изменение высоты textarea по вертикали */
+
+    }
+
+    .list-group input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .list-group input[type="submit"]:hover {
+        background-color: #0056b3;
+
+
+</style>
+
+<ul class="list-group">
+    {% for response in responses %}
+        <li>
+            {{ response.dateCreation }}
+            {{ response.responseUser }}
+            <br><hr>
+            {{ response.text }}
+            <br><hr>
+            {% if response.responseUser != user %}
+
+
+                <form method="post" action= "" >
+                    {% csrf_token %}
+
+                    <label>Ответить:</label>
+
+                     {{ form }}
+                    <input type="hidden" name="response_post_id" id="response_post_id" value="{{response.id}}">
+                    <input type="hidden" name="response_user_id" id="response_user_id" value="{{response.responseUser_id}}">
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
+
+                    <label>Ответы:</label>
+                    <ul>
+                    {% for r in response.resp_from_repl.all %}
+                        <li>
+                           {{r.text}}
+                        </li>
+
+                    {% endfor %}
+                    </ul>
+
+            {% endif %}
+
+
+                <form method="post" action="{% url 'delete_response' response.id %}">
+                    {% csrf_token %}
+                    <div>
+                        <input type="submit" value="Удалить отклик">
+                    </div>
+                </form>
+
+            </li>
+    {% endfor %}
+</ul>
+<!--<script>-->
+<!--    function add_reply(responseId){-->
+<!--    document.get.Element.By('text').value = responseId-->
+<!--    }-->
+<!--</script>-->
+
+
+{% endblock content %}
